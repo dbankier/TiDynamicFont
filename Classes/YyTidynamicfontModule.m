@@ -33,7 +33,7 @@
 	// this method is called when the module is first loaded
 	// you *must* call the superclass
 	[super startup];
-	
+
 	NSLog(@"[INFO] %@ loaded",self);
 }
 
@@ -42,12 +42,12 @@
 	// this method is called when the module is being unloaded
 	// typically this is during shutdown. make sure you don't do too
 	// much processing here or the app will be quit forceably
-	
+
 	// you *must* call the superclass
 	[super shutdown:sender];
 }
 
-#pragma mark Cleanup 
+#pragma mark Cleanup
 
 -(void)dealloc
 {
@@ -70,7 +70,7 @@
 {
 	if (count == 1 && [type isEqualToString:@"my_event"])
 	{
-		// the first (of potentially many) listener is being added 
+		// the first (of potentially many) listener is being added
 		// for event named 'my_event'
 	}
 }
@@ -88,7 +88,7 @@
 #pragma Public APIs
 
 -(id)registerFont:(id)args
-{    
+{
     NSObject *arg = [args objectAtIndex: 0];
     if ([arg isKindOfClass:[TiFile class]])
 	{
@@ -97,6 +97,7 @@
 		TiFile *file = (TiFile*)arg;
         NSData *data = [NSData dataWithContentsOfFile:[file path]];
         CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)data);
+        [UIFont familyNames]; // Fix hang app
         CGFontRef font = CGFontCreateWithDataProvider(provider);
         if (! CTFontManagerRegisterGraphicsFont(font, &error)) {
             CFStringRef errorDescription = CFErrorCopyDescription(error);
